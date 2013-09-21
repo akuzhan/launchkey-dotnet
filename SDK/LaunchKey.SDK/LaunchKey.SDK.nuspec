@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <!-- TODO: Need to determine the license type and where we'll point to -->
+    <!--<licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>-->
+    
+    <projectUrl>http://www.launchkey.com</projectUrl>
+    
+    <!-- TODO: Need to point this to a resource elsewhere -->
+    <iconUrl>http://jgh.me/launchkey-logo-blue-icon.png</iconUrl>
+    
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Initial release</releaseNotes>
+    <copyright>Copyright 2013</copyright>
+    <tags>LaunchKey Security Authentication</tags>
+    <dependencies>
+	<dependency id="BouncyCastle" version="1.7.0" />
+	<dependency id="RestSharp" version="104.1" />
+    </dependencies>
+  </metadata>
+  <files>
+     <file src="NuGetReadMe.txt" target="readme.txt" />
+  </files>
+</package>
