@@ -1,0 +1,12 @@
+﻿@model LaunchKey.Examples.AspMvc.Models.TreasureChestModel
+
+@{
+    ViewBag.Title = "Treasure";
+}
+
+<h2>Treasure</h2>
+<div style="text-align: center">
+    <h3>You found my treasure. <br />You gained <span style="color: darkgoldenrod">@Model.XpGained XP</span>!<br /> ... and found <span style="color: cadetblue">@Model.ItemGained</span>!</h3>
+    <p><img src="~/Content/treasure.png" /></p>
+    
+</div>

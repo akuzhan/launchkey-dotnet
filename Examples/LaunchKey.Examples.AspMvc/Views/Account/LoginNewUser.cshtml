@@ -1,0 +1,23 @@
+﻿@model LaunchKey.Examples.AspMvc.Models.LoginNewUserModel
+
+@{
+    ViewBag.Title = "Login : New User";
+}
+
+<h2>New User</h2>
+
+@using (Html.BeginForm("LoginNewUser", "Account", FormMethod.Post)) {
+    
+    <div style="text-align: center">
+        @Html.ValidationSummary()
+        @Html.HiddenFor(m => m.AuthRequest)
+
+        @Html.LabelFor(m => m.FriendlyName)
+        @Html.EditorFor(m => m.FriendlyName)
+        @Html.ValidationMessageFor(m => m.FriendlyName)
+        
+        <div>
+            <input type="submit" name="Submit" value="Submit" />
+        </div>
+    </div>
+}

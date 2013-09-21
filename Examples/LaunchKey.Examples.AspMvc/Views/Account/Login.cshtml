@@ -1,0 +1,143 @@
+﻿@model LaunchKey.Examples.AspMvc.Models.LoginModel
+
+@{
+    ViewBag.Title = "Log in with LaunchKey";
+}
+
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+</hgroup>
+
+<div style="text-align: center">
+
+    <div>
+        <label for="launchkeyUsername">LaunchKey Username</label>
+        <input type="text" id="launchkeyUsername" class="launchkeyUsername" size="30" autofocus />
+    </div>
+    <div>
+        <a href="javascript:void(null)" class="launchkeyLogin" id="launchkeyLoginButton"><span class="icon">&nbsp;</span><span class="text">Log in</span></a>
+    </div>
+    
+
+    </div>
+
+@section Styles {
+    <style>
+        /* We use this to gray out the login text box when the launch request is being processed */
+        .launchkeyUsername[disabled] {
+            background-color: lightgray;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            var $lkLoginButton = $("#launchkeyLoginButton");
+            var $lkLoginText = $("#launchkeyLoginButton .text");
+            var $lkUsernameTextBox = $("#launchkeyUsername");
+
+            var fnSubmitAuth = function () {
+                // make sure the user actually put in a value
+                if ($.trim($lkUsernameTextBox.val()).length > 0) {
+                    // disable the form and button to prevent any clicks while we process this username
+                    $lkUsernameTextBox.attr("disabled", "disabled");
+                    $lkLoginText.text("Contacting LaunchKey ... ");
+
+                    // Make a call to our Accounts:LoginJson action to begin the launch request.
+                    $.getJSON("@(Url.Action("LoginJson"))", { username: $lkUsernameTextBox.val() }, function (authResult) {
+
+                        // If we get Successful, this means our launch request was sent to the device
+                        if (authResult.Successful) {
+
+                            // Notify the user that we are waiting on them
+                            $lkLoginText.text("Launch Request Sent ... ");
+                            var pollWait = false;
+                            var pollCount = 0;
+
+                            // set a timer to call our LoginPollJson action once every 2 seconds to see if the state of our launch request has changed.
+                            var intHandle = window.setInterval(function () {
+
+                                // Make sure we aren't already waiting on a resposne from our LoginPollJson action
+                                if (!pollWait) {
+                                    pollWait = true;
+                                    pollCount++;
+
+                                    // Let the user know we are still waiting on them ... 
+                                    $lkLoginText.text("Waiting ... ");
+
+                                    // check if login has been processed
+                                    $.getJSON("@(Url.Action("LoginPollJson"))", { authRequest: authResult.AuthRequest }, function (result) {
+                                        
+                                        // Did our Poll check succeed?
+                                        if (result.Successful) {
+                                            
+                                            // Success, but we are still waiting on the device to respond
+
+                                            if (result.Waiting) {
+                                                pollWait = false;
+                                            // Success, and the device approved the launch request. He likes us, he really does!
+                                            } else if (result.Accepted) {
+                                                // Stop this timer from continuing to fire.
+                                                window.clearTimeout(intHandle);
+
+                                                // notify the user of success!
+                                                $lkLoginText.text("Device responded");
+
+                                                // Wait a second, so the user can see our message maybe, and redirect to the URL given to us by our LoginPollJson action
+                                                window.setTimeout(function () { window.location.href = result.RedirectUrl; }, 1000, null);
+
+                                            // Success, but the device rejected us :'(
+                                            } else {
+
+                                                // Stop the poll cycle
+                                                window.clearTimeout(intHandle);
+
+                                                // Show the user the error for a few seconds
+                                                $lkLoginText.text("Device denied access :(");
+
+                                                // wait a few seconds, then Reset the logon form so they can make another attempt.
+                                                window.setTimeout(function () {
+                                                    $lkLoginText.text("Log in");
+                                                    $lkUsernameTextBox.removeAttr("disabled");
+                                                }, 3000, null);
+                                            }
+
+                                        } else {
+                                            // retry
+                                            pollWait = false;
+                                        }
+
+                                    });
+                                }
+                            }, 2000);
+                        } else {
+                            // auth request failed.
+                            $lkLoginText.text("Login Request Failed :(");
+                            window.setTimeout(function () {
+                                $lkLoginText.text("Log in");
+                                $lkUsernameTextBox.removeAttr("disabled");
+                            }, 3000, null);
+                        }
+                    });
+                } else {
+                    $lkUsernameTextBox.focus();
+                    
+                }
+            }
+
+
+
+            $lkLoginButton.click(fnSubmitAuth);
+            $lkUsernameTextBox.keyup(function (e) {
+                if (e.keyCode == 13) {
+                    fnSubmitAuth();
+                }
+            });
+        });
+    </script>
+
+
+    @Scripts.Render("~/bundles/jqueryval")
+}
