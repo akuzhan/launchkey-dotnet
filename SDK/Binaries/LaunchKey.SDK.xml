@@ -1,0 +1,441 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LaunchKey.SDK</name>
+    </assembly>
+    <members>
+        <member name="T:LaunchKey.SDK.Rest.AuthenticationType">
+            <summary>
+            Represents a type of orbit
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.AuthenticationType.Session">
+            <summary>
+            Indicates a session-based orbit 
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.AuthenticationType.Transaction">
+            <summary>
+            Indicates a transaction-based orbit type
+            </summary>
+        </member>
+        <member name="T:LaunchKey.SDK.Rest.AuthsResponse">
+            <summary>
+            Response object for requests to /auth/
+            </summary>
+        </member>
+        <member name="T:LaunchKey.SDK.Rest.LaunchKeyResponse">
+            <summary>
+            base class for most API responses, includes common parameters
+            </summary>
+        </member>
+        <member name="M:LaunchKey.SDK.Rest.LaunchKeyResponse.#ctor">
+            <summary>
+            Default constructor. Not all API requests contain detailed information. Assume successful if not present
+            </summary>
+        </member>
+        <member name="P:LaunchKey.SDK.Rest.LaunchKeyResponse.Successful">
+            <summary>
+            Whether the API call was a success or not
+            </summary>
+        </member>
+        <member name="P:LaunchKey.SDK.Rest.LaunchKeyResponse.StatusCode">
+            <summary>
+            Status code indicating the state of the request. Corresponds to HTTP response codes.
+            </summary>
+        </member>
+        <member name="P:LaunchKey.SDK.Rest.LaunchKeyResponse.Message">
+            <summary>
+            Error details associated with a non-0 value in <see cref="P:LaunchKey.SDK.Rest.LaunchKeyResponse.MessageCode"/>
+            </summary>
+        </member>
+        <member name="P:LaunchKey.SDK.Rest.LaunchKeyResponse.MessageCode">
+            <summary>
+            Error code, if any
+            </summary>
+        </member>
+        <member name="P:LaunchKey.SDK.Rest.LaunchKeyResponse.Response">
+            <summary>
+            Response body, if applicable
+            </summary>
+        </member>
+        <member name="P:LaunchKey.SDK.Rest.AuthsResponse.AuthRequest">
+            <summary>
+            Unique identifier to use when referring to this request in future polls, deorbits, etc.
+            </summary>
+        </member>
+        <member name="T:LaunchKey.SDK.Rest.DecryptedPollResponse">
+            <summary>
+            Decrypted details returned from a request to /poll/
+            </summary>
+        </member>
+        <member name="P:LaunchKey.SDK.Rest.DecryptedPollResponse.Response">
+            <summary>
+            Authentication outcome. true for success, false for failure
+            </summary>
+        </member>
+        <member name="P:LaunchKey.SDK.Rest.DecryptedPollResponse.AppPins">
+            <summary>
+            List of previous pins sent by the user's device. Can be used as an additional verification step.
+            </summary>
+        </member>
+        <member name="P:LaunchKey.SDK.Rest.DecryptedPollResponse.AuthRequest">
+            <summary>
+            Unique ID associated with the auth request
+            </summary>
+        </member>
+        <member name="P:LaunchKey.SDK.Rest.DecryptedPollResponse.DeviceId">
+            <summary>
+            User's device ID
+            </summary>
+        </member>
+        <member name="T:LaunchKey.SDK.Rest.LaunchKeyApiException">
+            <summary>
+            Exception object thrown by LaunchKey API wrapper
+            </summary>
+        </member>
+        <member name="M:LaunchKey.SDK.Rest.LaunchKeyApiException.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:LaunchKey.SDK.Rest.LaunchKeyApiException.#ctor(System.String)">
+            <summary>
+            Construct with message 
+            </summary>
+            <param name="msg">Error details</param>
+        </member>
+        <member name="M:LaunchKey.SDK.Rest.LaunchKeyApiException.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct with message and inner exception
+            </summary>
+            <param name="msg">Error details</param>
+            <param name="inner">Inner exception</param>
+        </member>
+        <member name="T:LaunchKey.SDK.Rest.LaunchKeyResponseCode">
+            <summary>
+            Possible response codes returned from the LaunchKey REST APIs.
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.Unspecified">
+            <summary>
+            Server did not specify a code
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.AuthsSuccessPushedNotification">
+            <summary>
+            POST; Pushed notification
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.AuthsErrorPushedNotification">
+            <summary>
+            POST; Pushed notification
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.AuthsErrorAppKeyOrAppSecretIncorrect">
+            <summary>
+            POST; Credentials incorrect for app and app secret
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.AuthsErrorCouldNotVerifyApp">
+            <summary>
+            POST; Error verifying app
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.AuthsErrorNoPairedDevices">
+            <summary>
+            POST; No paired devices
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.AuthsErrorInvalidAppKey">
+            <summary>
+            POST; Invalid app key
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.AuthsErrorNoSuchUser">
+            <summary>
+            POST; No such user
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.AuthsErrorSignatureDoesNotMatch">
+            <summary>
+            POST; Signature does not match
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.AuthsErrorAppCredentialsIncorrect">
+            <summary>
+            POST; App credentials incorrect
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.AuthsErrorAuthorizationExpired">
+            <summary>
+            POST; Authorization expired
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.AuthsErrorInvalidSignature">
+            <summary>
+            POST; Error checking signature, ensure padding is valid
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.AuthsErrorSignatureMatchesButDecryptionFailed">
+            <summary>
+            POST; Signature matches, but error decrypting secret_key
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.AuthsErrorSecretKeyStructureInvalid">
+            <summary>
+            POST; Decrypted secret_key, but malformed structure
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.AuthsErrorAppDisabled">
+            <summary>
+            POST; App disabled
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.LogsSuccessfullyUpdated">
+            <summary>
+            PUT; Successfully updated
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.LogsErrorIncorrectDataForCall">
+            <summary>
+            PUT; Incorrect data for API call
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.LogsErrorCredentialsIncorrect">
+            <summary>
+            PUT; Credentials incorrect
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.LogsErrorCouldNotVerifyApp">
+            <summary>
+            PUT; Error validating app
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.LogsErrorLogInconsistent">
+            <summary>
+            PUT; Log inconsistent, unable to update
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.LogsErrorUnknownAuthRequest">
+            <summary>
+            PUT; Unknown auth request
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.LogsErrorAuthRequestDoesNotCorrelateToSession">
+            <summary>
+            PUT; Auth request does not correlate to session
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.PingSuccess">
+            <summary>
+            GET; Return the public key
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.PingSuccessKeyUpToDate">
+            <summary>
+            GET; Key is up to date
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.PingErrorIncorrectDataForCall">
+            <summary>
+            GET; Incorrect data for API call
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.PollSuccess">
+            <summary>
+            GET; Return the auth package
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.PollErrorIncorrectDataForCall">
+            <summary>
+            GET; Incorrect data for API call
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.PollErrorNoPendingRequest">
+            <summary>
+            GET; There is no pending request
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.PollErrorResponsePending">
+            <summary>
+            GET; Pending response
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LaunchKeyResponseCode.PollErrorExpiredRequest">
+            <summary>
+            GET; Expired request
+            </summary>
+        </member>
+        <member name="T:LaunchKey.SDK.Rest.LaunchKeyRestClient">
+            <summary>
+            Thin wrapper of the LaunchKey REST API. 
+            </summary>
+        </member>
+        <member name="M:LaunchKey.SDK.Rest.LaunchKeyRestClient.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            Instantiate a LaunchKey REST client using app credentials
+            </summary>
+            <param name="appKey">app key</param>
+            <param name="secretKey">app secret key</param>
+            <param name="privateRsaKeyContent">RSA private key in PEM-OAEP format</param>
+            <param name="apiVersion">API endpoint to use. Defaults to v1</param>
+        </member>
+        <member name="M:LaunchKey.SDK.Rest.LaunchKeyRestClient.Ping">
+            <summary>
+            Sends a /ping request to the API, retrieving the current API public key. Called implicitly by other API functions as needed.
+            </summary>
+            <returns><see cref="T:LaunchKey.SDK.Rest.PingResponse"/> object including public key for LaunchKey API</returns>
+        </member>
+        <member name="M:LaunchKey.SDK.Rest.LaunchKeyRestClient.Authenticate(System.String,LaunchKey.SDK.Rest.AuthenticationType)">
+            <summary>
+            Begin an authentication cycle for user identified by <paramref name="username"/>. Implicitly calls Ping().
+            </summary>
+            <param name="username">Username to authenticate</param>
+            <param name="authType">Authentication type, either transaction or session</param>
+            <returns><see cref="T:LaunchKey.SDK.Rest.AuthsResponse"/> object including unique token for further information about this request</returns>
+        </member>
+        <member name="M:LaunchKey.SDK.Rest.LaunchKeyRestClient.Poll(System.String)">
+            <summary>
+            Poll the status of an authentication request using the reference id supplied in <paramref name="authRequest"/>. Implicitly calls Ping().
+            </summary>
+            <param name="authRequest">unique authentication request reference ID to check</param>
+            <returns><see cref="T:LaunchKey.SDK.Rest.PollResponse"/> object including status of request</returns>
+        </member>
+        <member name="M:LaunchKey.SDK.Rest.LaunchKeyRestClient.Logs(LaunchKey.SDK.Rest.LogsAction,LaunchKey.SDK.Rest.LogsStatus,System.String)">
+            <summary>
+            Notify the LaunchKey API of a status change, such as successful or unsuccessful logins or revocations. Implicitly calls <see cref="M:LaunchKey.SDK.Rest.LaunchKeyRestClient.Ping"/>.
+            </summary>
+            <param name="action">Action that was performed</param>
+            <param name="status">Outcome of action</param>
+            <param name="authenticationRequest">Authentication request associated with the action</param>
+            <returns><see cref="T:LaunchKey.SDK.Rest.LogsResponse"/> object indicating success or failure of the status update</returns>
+        </member>
+        <member name="M:LaunchKey.SDK.Rest.LaunchKeyRestClient.IsAuthorized(System.String,LaunchKey.SDK.Rest.PollResponse)">
+            <summary>
+            given a <see cref="T:LaunchKey.SDK.Rest.PollResponse"/> object, returns whether the authentication has been approved by a user yet.
+            if the authentication request is approved, makes an implicit call to <see cref="M:LaunchKey.SDK.Rest.LaunchKeyRestClient.Logs(LaunchKey.SDK.Rest.LogsAction,LaunchKey.SDK.Rest.LogsStatus,System.String)"/> to update the device status
+            </summary>
+            <param name="authRequest">the associated quth request</param>
+            <param name="response">The response to validate</param>
+            <returns>true if the user has approved the authorization, or false if they have not</returns>
+        </member>
+        <member name="M:LaunchKey.SDK.Rest.LaunchKeyRestClient.Logout(System.String)">
+            <summary>
+            Convenience method for logging out an auth session
+            </summary>
+            <param name="authRequest">The authRequest to deorbit</param>
+            <returns><see cref="T:LaunchKey.SDK.Rest.LogsResponse"/> object received from server</returns>
+        </member>
+        <member name="T:LaunchKey.SDK.Rest.LaunchKeyEncryptionProvider">
+            <summary>
+            Utility class for performing common encryption/decryption/signing tasks.
+            Uses RSA OAEP-SHA1 encoding for encryption tasks, and RSA SHA256 for signing
+            </summary>
+        </member>
+        <member name="M:LaunchKey.SDK.Rest.LaunchKeyEncryptionProvider.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:LaunchKey.SDK.Rest.LaunchKeyEncryptionProvider.Decrypt(Org.BouncyCastle.Crypto.AsymmetricKeyParameter,System.Byte[])">
+            <summary>
+            Decrypt <paramref name="data"/> using <paramref name="key"/> and RSA OAEP-SHA1
+            </summary>
+            <param name="key">The key to use when decrypting</param>
+            <param name="data">The data to decrypt</param>
+            <returns>decrypted data</returns>
+        </member>
+        <member name="M:LaunchKey.SDK.Rest.LaunchKeyEncryptionProvider.Encrypt(Org.BouncyCastle.Crypto.AsymmetricKeyParameter,System.Byte[])">
+            <summary>
+            Encrypt <paramref name="data"/> using <paramref name="key"/> and RSA OAEP-SHA1
+            </summary>
+            <param name="key">The key to use when encrypting</param>
+            <param name="data">The data to encrypt</param>
+            <returns>encrypted data</returns>
+        </member>
+        <member name="M:LaunchKey.SDK.Rest.LaunchKeyEncryptionProvider.Sign(Org.BouncyCastle.Crypto.AsymmetricKeyParameter,System.Byte[])">
+            <summary>
+            Creates a RSA SHA256 signature of <paramref name="data"/> using <paramref name="key"/>
+            </summary>
+            <param name="key">The key to use when signing</param>
+            <param name="data">The data to sign</param>
+            <returns>digest signature</returns>
+        </member>
+        <member name="T:LaunchKey.SDK.Rest.LogsAction">
+            <summary>
+            Parameter passed to /logs/ API. Used in conjuction with <see cref="T:LaunchKey.SDK.Rest.LogsStatus"/> 
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LogsAction.Authenticate">
+            <summary>
+            Represents an authentication attempt
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LogsAction.Revoke">
+            <summary>
+            Represents an authentication revocation 
+            </summary>
+        </member>
+        <member name="T:LaunchKey.SDK.Rest.LogsResponse">
+            <summary>
+            Response object for /logs/ requests
+            </summary>
+        </member>
+        <member name="T:LaunchKey.SDK.Rest.LogsStatus">
+            <summary>
+            Parameter passed to /logs/ API. Used in conjuction with <see cref="T:LaunchKey.SDK.Rest.LogsAction"/>.
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LogsStatus.Granted">
+            <summary>
+            The action was granted
+            </summary>
+        </member>
+        <member name="F:LaunchKey.SDK.Rest.LogsStatus.Denied">
+            <summary>
+            The action was denied
+            </summary>
+        </member>
+        <member name="T:LaunchKey.SDK.Rest.PingResponse">
+            <summary>
+            Response object returned from /ping/ requests
+            </summary>
+        </member>
+        <member name="P:LaunchKey.SDK.Rest.PingResponse.DateStamp">
+            <summary>
+            timestamp associated with the <see cref="P:LaunchKey.SDK.Rest.PingResponse.Key"/> property. 
+            </summary>
+        </member>
+        <member name="P:LaunchKey.SDK.Rest.PingResponse.LaunchkeyTime">
+            <summary>
+            Current time on LaunchKey servers
+            </summary>
+        </member>
+        <member name="P:LaunchKey.SDK.Rest.PingResponse.Key">
+            <summary>
+            PEM-OAEP encoded public RSA key for the API. 
+            </summary>
+        </member>
+        <member name="T:LaunchKey.SDK.Rest.PollResponse">
+            <summary>
+            Response object returned from /poll/ requests
+            </summary>
+        </member>
+        <member name="P:LaunchKey.SDK.Rest.PollResponse.Auth">
+            <summary>
+            Encrypted authentication package delivered from the API
+            </summary>
+        </member>
+        <member name="P:LaunchKey.SDK.Rest.PollResponse.DecryptedAuth">
+            <summary>
+            Decrypted object extracted from <see cref="P:LaunchKey.SDK.Rest.PollResponse.Auth"/> property
+            </summary>
+        </member>
+        <member name="P:LaunchKey.SDK.Rest.PollResponse.UserHash">
+            <summary>
+            Unique user hash. Represents a permanently unique identifier to identify a user within a LaunchKey app.
+            </summary>
+        </member>
+    </members>
+</doc>
