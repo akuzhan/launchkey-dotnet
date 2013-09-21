@@ -3,7 +3,7 @@
 #########################
 ## Description
 
-Please check out the documentation at https://launchkey.com/docs/sdk/dotnet/
+Please check out the documentation at https://launchkey.com/docs/sdk/dotnet/ or in LaunchKey-NET-SDK.pdf.
 
 
 ## Contributing
