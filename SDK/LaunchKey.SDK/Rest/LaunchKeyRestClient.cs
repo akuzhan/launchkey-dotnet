@@ -75,18 +75,33 @@ namespace LaunchKey.SDK.Rest
 			return pingResponse;
 		}
 
+        /// <summary>
+        /// Begin an authentication cycle for user identified by <paramref name="username"/>. Implicitly calls Ping().
+        /// </summary>
+        /// <param name="username">Username to authenticate</param>
+        /// <returns><see cref="AuthsResponse"/> object including unique token for further information about this request</returns>
+        public AuthsResponse Authenticate(string username)
+        {
+            this.EnsureAuthorizationRecent();
+            RestRequest request = new RestRequest("auths", Method.POST);
+            request.AddParameter("username", username);
+            request.AddParameter("user_push_id", "false");
+            return this.AuthenticatedRestRequest<AuthsResponse>(request);
+        }
 
 		/// <summary>
 		/// Begin an authentication cycle for user identified by <paramref name="username"/>. Implicitly calls Ping().
 		/// </summary>
 		/// <param name="username">Username to authenticate</param>
 		/// <param name="authType">Authentication type, either transaction or session</param>
+        /// <param name="userPushId">True if you would like a unique hash returned that represents the LaunchKey user</param>
 		/// <returns><see cref="AuthsResponse"/> object including unique token for further information about this request</returns>
-		public AuthsResponse Authenticate(string username, AuthenticationType authType)
+		public AuthsResponse Authenticate(string username, AuthenticationType authType, bool userPushId)
 		{
 			this.EnsureAuthorizationRecent();
 			RestRequest request = new RestRequest("auths", Method.POST);
 			request.AddParameter("username", username);
+            request.AddParameter("user_push_id", userPushId.ToString().ToLower());
 			if (authType == AuthenticationType.Transaction)
 				request.AddParameter("session", 0);
 			return this.AuthenticatedRestRequest<AuthsResponse>(request);
@@ -121,6 +136,7 @@ namespace LaunchKey.SDK.Rest
 				response.DecryptedAuth = new DecryptedPollResponse()
 				{
 					AuthRequest = jobj.Property("auth_request") != null ? jobj.Property("auth_request").Value.ToString() : null,
+                    UserPushId = jobj.Property("user_push_id") != null ? jobj.Property("user_push_id").Value.ToString() : null,
 					DeviceId = jobj.Property("device_id") != null ? jobj.Property("device_id").Value.ToString() : null,
 					AppPins = jobj.Property("app_pins") != null ? jobj.Property("app_pins").Value.ToString().Split(',') : null,
 					Response = jobj.Property("response") != null ? bool.Parse(jobj.Property("response").Value.ToString()) : false

@@ -25,6 +25,11 @@ namespace LaunchKey.SDK.Rest
 		/// </summary>
 		public string AuthRequest { get; set; }
 
+        /// <summary>
+        /// Unique ID associated with the LaunchKey user
+        /// </summary>
+        public string UserPushId { get; set; }
+
 		/// <summary>
 		/// User's device ID
 		/// </summary>
